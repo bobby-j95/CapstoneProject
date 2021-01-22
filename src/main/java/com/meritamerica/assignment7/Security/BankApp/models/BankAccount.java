@@ -20,45 +20,47 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="ACCOUNT_TYPE", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "ACCOUNT_TYPE", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorOptions(force = true)
 
 //@MappedSuperclass
-public abstract class BankAccount  {
-	
+public abstract class BankAccount {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bank_account_generator")
 	@Column(name = "account_id")
 	private int accountNumber;
-	
+
 	@ManyToOne
-	@JoinColumn(name="account_holder_id", nullable= false)
+	@JoinColumn(name = "account_holder_id", nullable = false)
 	@JsonIgnore
 	private AccountHolder accountHolder;
 
 	@Min(value = 0L, message = "Balance Lower Than 0 Exception")
 	private double balance;
-	
-	//@DecimalMin(value = "0.0", inclusive = false, message = "Interest must be greater than 0")
-	//@DecimalMax(value = "1.0", inclusive = false, message = "Interest rate must be lower than 1")
+
+	// @DecimalMin(value = "0.0", inclusive = false, message = "Interest must be
+	// greater than 0")
+	// @DecimalMax(value = "1.0", inclusive = false, message = "Interest rate must
+	// be lower than 1")
 	private double interestRate;
-	
+
 	private String openedOn;
 
-	public  BankAccount() { 
-		
+	public BankAccount() {
+
 		openedOn = "1234566";
-		}
-	
+	}
+
 	public BankAccount(double interestRate) {
-		
-		this.balance = 0 ;
-		this.interestRate=interestRate;
+
+		this.balance = 0;
+		this.interestRate = interestRate;
 		openedOn = "123123141423";
 	}
-	
-	BankAccount(double balance, double interestRate){
-		
+
+	public BankAccount(double balance, double interestRate) {
+
 		this.balance = balance;
 		this.interestRate = interestRate;
 		openedOn = "123123141423";
@@ -71,28 +73,31 @@ public abstract class BankAccount  {
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
 	}
-	
+
 	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(double balance)  {
-			this.balance = balance;	
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
-	
-	 public double getInterestRate() {
+
+	public double getInterestRate() {
 		return interestRate;
 	}
+
 	public void setInterestRate(double interestRate) {
 		this.interestRate = interestRate;
 	}
+
 	public int getAccountNumber() {
 		return accountNumber;
 	}
+
 	public void setAccountNumber(int accountNumber) {
-		this.accountNumber =  accountNumber;
+		this.accountNumber = accountNumber;
 	}
-	
+
 	public String getOpenedOn() {
 		return openedOn;
 	}
@@ -100,5 +105,5 @@ public abstract class BankAccount  {
 	public void setOpenedOn(String openedOn) {
 		this.openedOn = openedOn;
 	}
-	
+
 }
