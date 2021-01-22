@@ -33,16 +33,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().frameOptions().disable();
 		http.csrf().disable();
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		http.authorizeRequests()
-				.antMatchers("/", "/authenticate/create-user", "/account-holders/**", "/account-holder/**",
-						"/cd-offering")
+				.antMatchers("/authenticate/create-user", "/account-holders/**", "/account-holder/**", "/cd-offering")
 				.hasRole("ADMIN").antMatchers("/user", "/user/**").hasRole("ACCOUNT_HOLDER")
-				.antMatchers("/authenticate", "/console", "/console/**").permitAll().anyRequest().authenticated().and()
+				.antMatchers("/authenticate", "/h2-console/**").permitAll().anyRequest().authenticated().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		// http.addFilterBefore(jwtRequestFilter,
+		// UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Bean
@@ -56,14 +57,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
-	public class WebConfiguration {
-
-		@Bean
-		ServletRegistrationBean h2servletRegistration() {
-			ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-			registrationBean.addUrlMappings("/console/*");
-			return registrationBean;
-		}
-	}
+	/*
+	 * public class WebConfiguration {
+	 * 
+	 * @Bean ServletRegistrationBean h2servletRegistration() {
+	 * ServletRegistrationBean registrationBean = new ServletRegistrationBean(new
+	 * WebServlet()); registrationBean.addUrlMappings("/console/*"); return
+	 * registrationBean; } }
+	 */
 
 }

@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil {
 
 	private String SECRET_KEY = "secret";
-	private int JWT_EXPIRATION_TIME = (3600 * 10);
+	private int JWT_EXPIRATION_TIME = (1000 * 60 * 60 * 10);
 	
 	public String extractUserName(String token) {
 		return extractClaim(token,  Claims::getSubject);
