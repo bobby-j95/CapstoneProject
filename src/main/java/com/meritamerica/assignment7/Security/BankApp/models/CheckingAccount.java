@@ -6,22 +6,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-
 @Entity
 @DiscriminatorValue("CHECKING")
-public class CheckingAccount extends BankAccount{
+public class CheckingAccount extends BankAccount {
 
 	private static final double INTEREST_RATE = .0001;
-	
-	public CheckingAccount(double balance)   {
+
+	public CheckingAccount(double balance) {
 		super(balance, INTEREST_RATE);
 	}
-	 public CheckingAccount()  {
-		 super(INTEREST_RATE);
-		 }
-	
-	
 
-	
+	public CheckingAccount() {
+		super(INTEREST_RATE);
+	}
+
 }

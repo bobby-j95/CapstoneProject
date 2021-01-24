@@ -11,12 +11,10 @@ import javax.validation.constraints.Min;
 
 @Entity
 @DiscriminatorValue("CD_ACCOUNT")
-public class CDAccount extends BankAccount{
+public class CDAccount extends BankAccount {
 
-
-	
 	private int term;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "offerings_id")
 	private CDOffering cdOffering;
@@ -28,28 +26,24 @@ public class CDAccount extends BankAccount{
 	public void setCdOffering(CDOffering cdOffering) {
 		this.cdOffering = cdOffering;
 	}
-	
+
 	public CDAccount() {
 		super();
 	}
-	
-	public CDAccount( double balance, double interestRate, int term) {
+
+	public CDAccount(double balance, double interestRate, int term) {
 		super(balance, interestRate);
-			this.term = term;
-		
+		this.term = term;
+
 	}
-	
-	
-	
-	
+
 	public int getTerm() {
-		
+
 		return this.term;
 	}
-	
+
 	public void setTerm(int term) {
 		this.term = term;
 	}
-	
-	
+
 }
