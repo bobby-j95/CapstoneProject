@@ -34,25 +34,25 @@ public class AccountHolderService {
 	Logger log = LoggerFactory.getLogger(this.getClass()); 	
 	
 	@Autowired
-	AccountHolderRepository repository;
+	private AccountHolderRepository repository;
 	
 	@Autowired
-	CheckingAccountRepository checkingRepository;
+	private CheckingAccountRepository checkingRepository;
 	
 	@Autowired
-	CDAccountRepository cdAccountRepository;
+	private CDAccountRepository cdAccountRepository;
 	
 	@Autowired 
-	CDOfferingRepository cdOfferingRepository;
+	private CDOfferingRepository cdOfferingRepository;
 	
 	@Autowired
-	SavingsAccountRepository savingsRepository;
+	private SavingsAccountRepository savingsRepository;
 	
 	@Autowired
-	UsersRepository usersRepository;
+	private UsersRepository usersRepository;
 
 	@Autowired
-	UsersDetailsService userService;
+	private UsersDetailsService userService;
 	
 	
 	public AccountHolder postAccountHolder(AccountHolder accountHolder) {
