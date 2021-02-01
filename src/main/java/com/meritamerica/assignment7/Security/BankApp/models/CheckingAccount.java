@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @DiscriminatorValue("CHECKING")
-public class CheckingAccount extends BankAccount {
+public abstract class CheckingAccount extends BankAccount {
 
 	private static final double INTEREST_RATE = .0001;
 
@@ -18,6 +18,12 @@ public class CheckingAccount extends BankAccount {
 
 	public CheckingAccount() {
 		super(INTEREST_RATE);
+	}
+	
+	@Override
+	public boolean closeAccount(BankAccount acc) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

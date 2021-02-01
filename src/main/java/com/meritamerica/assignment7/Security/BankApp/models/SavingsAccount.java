@@ -20,4 +20,12 @@ public class SavingsAccount extends BankAccount {
 		super(balance, INTEREST_RATE);
 	}
 
+	@Override
+	public boolean closeAccount(BankAccount acc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+
 }

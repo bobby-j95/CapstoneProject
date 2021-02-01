@@ -1,7 +1,5 @@
 package com.meritamerica.assignment7.Security.BankApp.models;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

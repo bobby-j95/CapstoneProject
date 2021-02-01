@@ -52,11 +52,11 @@ public class AccountHolder {
 	private Users user;
 	
 
-	@OneToMany(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToOne(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<CheckingAccount> checkingAccounts;
 	
-	@OneToMany(targetEntity = SavingsAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToOne(targetEntity = SavingsAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<SavingsAccount> savingsAccounts;
 

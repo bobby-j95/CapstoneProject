@@ -46,4 +46,12 @@ public class CDAccount extends BankAccount {
 		this.term = term;
 	}
 
+	@Override
+	public boolean closeAccount(BankAccount acc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+
 }

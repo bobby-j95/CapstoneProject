@@ -61,13 +61,13 @@ public class MeritBankController {
 	
 	// <-------------ADMINISTRATOR------------>
 	
-	@GetMapping(value = "/account-holders")
+	@GetMapping(value = "/account-holders") //done
 	public List<AccountHolder> getAccountHolder() {
 		log.info("Returned account holders");
 		return service.getAccountHolders();
 	}
 	
-	@PostMapping(value = "/account-holder")
+	@PostMapping(value = "/account-holder") //done
 	@ResponseStatus(HttpStatus.CREATED)
 	public  AccountHolder addAccountHolder(@RequestBody @Valid AccountHolder accountHolder) {
 		//try catch here i think
@@ -77,7 +77,7 @@ public class MeritBankController {
 	}
 	
 	
-	@GetMapping(value = "/account-holders/{accountID}")
+	@GetMapping(value = "/account-holders/{accountID}") //done
 	public AccountHolder getAccountByID(@PathVariable("accountID") int id) 
 														throws NoSuchResourceFoundException {
 		log.info("Returned Account Holder");
@@ -85,7 +85,7 @@ public class MeritBankController {
 	}
 	
 	
-	@PostMapping(value = "/account-holders/{accountID}/checking-account")
+	@PostMapping(value = "/account-holders/{accountID}/checking-account") //done
 	@ResponseStatus(HttpStatus.CREATED)
 	public CheckingAccount postCheckingAccount(@PathVariable("accountID") int id, @RequestBody @Valid CheckingAccount checkingAccount) 
 												throws NoSuchResourceFoundException, ExceedsCombinedLimitException{
@@ -93,7 +93,7 @@ public class MeritBankController {
 		return service.postCheckingAccount(id, checkingAccount);
 	}
 	
-	@GetMapping(value = "/account-holders/{accountID}/checking-accounts")
+	@GetMapping(value = "/account-holders/{accountID}/checking-accounts") //done
 	@ResponseStatus(HttpStatus.OK)
 	public List<CheckingAccount> getCheckingAccount(@PathVariable("accountID") int id) 
 												throws NoSuchResourceFoundException{
@@ -153,7 +153,7 @@ public class MeritBankController {
 	
 	// <-------------AUTHENTICATION------------>
 	
-	@PostMapping(value = "/authenticate")
+	@PostMapping(value = "/authenticate") //done
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 												throws Exception{

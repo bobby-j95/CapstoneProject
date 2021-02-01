@@ -1,5 +1,8 @@
 package com.meritamerica.assignment7.Security.BankApp.models;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -35,6 +38,9 @@ public abstract class BankAccount {
 	@JoinColumn(name = "account_holder_id", nullable = false)
 	@JsonIgnore
 	private AccountHolder accountHolder;
+	
+	@OneToMany
+	private List<Transactions> transaction;
 
 	@Min(value = 0L, message = "Balance Lower Than 0 Exception")
 	private double balance;
@@ -44,7 +50,7 @@ public abstract class BankAccount {
 	// @DecimalMax(value = "1.0", inclusive = false, message = "Interest rate must
 	// be lower than 1")
 	private double interestRate;
-
+	
 	private String openedOn;
 
 	public BankAccount() {
@@ -79,7 +85,7 @@ public abstract class BankAccount {
 	}
 
 	public void setBalance(double balance) {
-		this.balance = balance;
+		this.balance += balance;
 	}
 
 	public double getInterestRate() {
@@ -105,5 +111,11 @@ public abstract class BankAccount {
 	public void setOpenedOn(String openedOn) {
 		this.openedOn = openedOn;
 	}
-
+	
+	public void makeTransaction(double amount, BankAccount acc) {
+		Date dateobj = new Date();
+		Transactions t = new Transactions(amount, dateobj, acc, this);
+		transaction.add(t);
+	}
+	public abstract boolean closeAccount(BankAccount acc);
 }
