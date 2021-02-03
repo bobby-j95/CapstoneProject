@@ -22,8 +22,14 @@ public abstract class CheckingAccount extends BankAccount {
 	
 	@Override
 	public boolean closeAccount(BankAccount acc) {
-		// TODO Auto-generated method stub
-		return false;
+		double negValue = -this.getBalance();
+		if(getBalance() > 0) {
+			acc.setBalance(this.getBalance());
+			this.setBalance(negValue);
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

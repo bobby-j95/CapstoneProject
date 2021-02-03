@@ -15,9 +15,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import org.hibernate.annotations.DiscriminatorOptions;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -112,10 +114,21 @@ public abstract class BankAccount {
 		this.openedOn = openedOn;
 	}
 	
-	public void makeTransaction(double amount, BankAccount acc) {
-		Date dateobj = new Date();
-		Transactions t = new Transactions(amount, dateobj, acc, this);
-		transaction.add(t);
+	public void makeTransaction(@RequestBody @Valid String kindOfTrans, @RequestBody @Valid String otherPlace, double amount, BankAccount acc) {
+		if(kindOfTrans.equalsIgnoreCase("Deposit")) {
+			if(otherPlace.equalsIgnoreCase("Transfer")) {
+				Date dateobj = new Date();
+				DepositTransferTransactions t = new DepositTransferTransactions(amount, dateobj, acc, this);
+				transaction.add(t);
+			} else {
+				Date dateobj = new Date();
+				DepositOtherTransaction t = new DepositOtherTransaction(amount, dateobj, otherPlace);
+				transaction.add(t);
+			}
+		} else {
+			//withdraw
+		}
+		
 	}
 	public abstract boolean closeAccount(BankAccount acc);
 }

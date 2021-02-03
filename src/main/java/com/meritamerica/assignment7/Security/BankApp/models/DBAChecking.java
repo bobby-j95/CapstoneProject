@@ -20,9 +20,10 @@ public class DBAChecking extends BankAccount{
 
 	@Override
 	public boolean closeAccount(BankAccount acc) {
+		double negValue = -this.getBalance();
 		if(getBalance() > 0) {
-			acc.setBalance(this.getBalance()*.8);
-			this.setBalance(-this.getBalance());
+			acc.setBalance(this.getBalance());
+			this.setBalance(negValue);
 			return true;
 		}else {
 			return false;
