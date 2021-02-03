@@ -1,4 +1,3 @@
-
 package com.meritamerica.assignment7.Security.BankApp.controller;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +40,7 @@ import com.meritamerica.assignment7.Security.BankApp.util.JwtUtil;
 
 
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MeritBankController {
 
