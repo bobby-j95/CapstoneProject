@@ -308,5 +308,14 @@ public class MeritBankController {
 		return service.getCDAccounts(accountHolder.getId());
 	}
 	
+	/*
+	@DeleteMapping(value = "/user/delete-cd-accounts")
+	@ResponseStatus(HttpStatus.OK)
+	public String deleteCDAccounts(@RequestHeader("Authorization") String jwt, @RequestBody CDAccount cdAccount){
+		AccountHolder accountHolder = getAccount(jwt);
+		log.info("Account Deleted");
+		return service.deleteCDAccount(cdAccount.getAccountNumber());
+	}
 	
+	*/
 }
