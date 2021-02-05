@@ -31,6 +31,8 @@ import com.meritamerica.assignment7.Security.BankApp.models.AccountHolder;
 import com.meritamerica.assignment7.Security.BankApp.models.CDAccount;
 import com.meritamerica.assignment7.Security.BankApp.models.CDOffering;
 import com.meritamerica.assignment7.Security.BankApp.models.CheckingAccount;
+import com.meritamerica.assignment7.Security.BankApp.models.DBAChecking;
+import com.meritamerica.assignment7.Security.BankApp.models.IRAAccount;
 import com.meritamerica.assignment7.Security.BankApp.models.MyUserDetails;
 import com.meritamerica.assignment7.Security.BankApp.models.SavingsAccount;
 import com.meritamerica.assignment7.Security.BankApp.models.Users;
@@ -99,6 +101,38 @@ public class MeritBankController {
 												throws NoSuchResourceFoundException{
 		log.info("Checking Account fetched");
 		return service.getCheckingAccount(id);
+	}
+	
+	@PostMapping(value = "/account-holders/{accountID}/dbachecking-account") //done
+	@ResponseStatus(HttpStatus.CREATED)
+	public DBAChecking postDBACheckingAccount(@PathVariable("accountID") int id, @RequestBody @Valid DBAChecking dbaCheckingAccount) 
+												throws NoSuchResourceFoundException, ExceedsCombinedLimitException{
+		log.info("DBA Checking Account created and Added");
+		return service.postDBACheckingAccount(id, dbaCheckingAccount);
+	}
+	
+	@GetMapping(value = "/account-holders/{accountID}/dbachecking-accounts") //done
+	@ResponseStatus(HttpStatus.OK)
+	public List<DBAChecking> getDBACheckingAccount(@PathVariable("accountID") int id) 
+												throws NoSuchResourceFoundException{
+		log.info("Checking Account fetched");
+		return service.getDBACheckingAccount(id);
+	}
+	
+	@PostMapping(value = "/account-holders/{accountID}/ira-account") //done
+	@ResponseStatus(HttpStatus.CREATED)
+	public IRAAccount postIRAAccount(@PathVariable("accountID") int id, @RequestBody @Valid IRAAccount iraAccount) 
+												throws NoSuchResourceFoundException, ExceedsCombinedLimitException{
+		log.info("DBA Checking Account created and Added");
+		return service.postIRAAccount(id, iraAccount);
+	}
+	
+	@GetMapping(value = "/account-holders/{accountID}/ira-accounts") //done
+	@ResponseStatus(HttpStatus.OK)
+	public List<DBAChecking> getIRAAccount(@PathVariable("accountID") int id) 
+												throws NoSuchResourceFoundException{
+		log.info("Checking Account fetched");
+		return service.getDBACheckingAccount(id);
 	}
 	
 	@PostMapping(value = "/account-holders/{accountID}/savings-account")
@@ -199,6 +233,24 @@ public class MeritBankController {
 		
 	}
 	
+	@PostMapping(value = "/user/dbachecking-account")
+	@ResponseStatus(HttpStatus.CREATED)
+	public DBAChecking postDBACheckingAccount(@RequestHeader("Authorization") String jwt, @RequestBody DBAChecking dbacheckingAccount) 
+														throws NoSuchResourceFoundException, ExceedsCombinedLimitException {
+		AccountHolder accountHolder = getAccount(jwt);
+		return service.postDBACheckingAccount(accountHolder.getId(), dbacheckingAccount);
+		
+	}
+	
+	@PostMapping(value = "/user/ira-account")
+	@ResponseStatus(HttpStatus.CREATED)
+	public IRAAccount postCheckingAccount(@RequestHeader("Authorization") String jwt, @RequestBody IRAAccount iraAccount) 
+														throws NoSuchResourceFoundException, ExceedsCombinedLimitException {
+		AccountHolder accountHolder = getAccount(jwt);
+		return service.postIRAAccount(accountHolder.getId(), iraAccount);
+		
+	}
+	
 	@PostMapping(value = "/user/savings-account")
 	@ResponseStatus(HttpStatus.CREATED)
 	public SavingsAccount postSavingsAccount(@RequestHeader("Authorization") String jwt, @RequestBody SavingsAccount savingsAccount) 
@@ -222,6 +274,22 @@ public class MeritBankController {
 														throws NoSuchResourceFoundException{
 		AccountHolder accountHolder = getAccount(jwt);
 		return service.getCheckingAccount(accountHolder.getId());
+	}
+	
+	@GetMapping(value = "/user/dbachecking-accounts")
+	@ResponseStatus(HttpStatus.OK)
+	public List<DBAChecking> getDBACheckingAccounts(@RequestHeader("Authorization") String jwt) 
+														throws NoSuchResourceFoundException{
+		AccountHolder accountHolder = getAccount(jwt);
+		return service.getDBACheckingAccount(accountHolder.getId());
+	}
+	
+	@GetMapping(value = "/user/ira-accounts")
+	@ResponseStatus(HttpStatus.OK)
+	public List<IRAAccount> getIRAAccounts(@RequestHeader("Authorization") String jwt) 
+														throws NoSuchResourceFoundException{
+		AccountHolder accountHolder = getAccount(jwt);
+		return service.getIRAAccount(accountHolder.getId());
 	}
 	
 	@GetMapping(value = "/user/savings-accounts")

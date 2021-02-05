@@ -13,19 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.meritamerica.assignment7.Security.BankApp.exceptions.ExceedsCombinedLimitException;
 import com.meritamerica.assignment7.Security.BankApp.exceptions.NoSuchResourceFoundException;
-import com.meritamerica.assignment7.Security.BankApp.models.AccountHolder;
-import com.meritamerica.assignment7.Security.BankApp.models.AccountHoldersContactDetails;
-import com.meritamerica.assignment7.Security.BankApp.models.CDAccount;
-import com.meritamerica.assignment7.Security.BankApp.models.CDOffering;
-import com.meritamerica.assignment7.Security.BankApp.models.CheckingAccount;
-import com.meritamerica.assignment7.Security.BankApp.models.SavingsAccount;
-import com.meritamerica.assignment7.Security.BankApp.models.Users;
-import com.meritamerica.assignment7.Security.BankApp.repositories.AccountHolderRepository;
-import com.meritamerica.assignment7.Security.BankApp.repositories.CDAccountRepository;
-import com.meritamerica.assignment7.Security.BankApp.repositories.CDOfferingRepository;
-import com.meritamerica.assignment7.Security.BankApp.repositories.CheckingAccountRepository;
-import com.meritamerica.assignment7.Security.BankApp.repositories.SavingsAccountRepository;
-import com.meritamerica.assignment7.Security.BankApp.repositories.UsersRepository;
+import com.meritamerica.assignment7.Security.BankApp.models.*;
+import com.meritamerica.assignment7.Security.BankApp.repositories.*;
 
 @Service
 public class AccountHolderService {
@@ -40,6 +29,9 @@ public class AccountHolderService {
 	private CheckingAccountRepository checkingRepository;
 	
 	@Autowired
+	private DBACheckingAccountRepository dbaCheckingRepository;
+	
+	@Autowired
 	private CDAccountRepository cdAccountRepository;
 	
 	@Autowired 
@@ -47,6 +39,9 @@ public class AccountHolderService {
 	
 	@Autowired
 	private SavingsAccountRepository savingsRepository;
+	
+	@Autowired
+	private IRAAccountRepository iraRepository;
 	
 	@Autowired
 	private UsersRepository usersRepository;
@@ -89,6 +84,34 @@ public class AccountHolderService {
 		}
 	}
 	
+	public DBAChecking postDBACheckingAccount(int id, DBAChecking dbaCheckingAccount) throws NoSuchResourceFoundException, ExceedsCombinedLimitException {
+		AccountHolder ah = findById(id);
+		Double balance = dbaCheckingAccount.getBalance();
+		if (ah.combinedBalance() + balance >= MAX_DEPOSIT_AMOUNT) {
+			throw new ExceedsCombinedLimitException("Deposit exceeds the " + MAX_DEPOSIT_AMOUNT + " total.");
+		}
+		else {	
+			log.info("Account balance is : " + ah.combinedBalance());
+			log.info("Added " + balance);
+			dbaCheckingAccount.setAccountHolder(ah);
+		return dbaCheckingRepository.save(dbaCheckingAccount);
+		}
+	}
+	
+	public IRAAccount postIRAAccount(int id, IRAAccount iraAccount) throws NoSuchResourceFoundException, ExceedsCombinedLimitException {
+		AccountHolder ah = findById(id);
+		Double balance = iraAccount.getBalance();
+		if (ah.combinedBalance() + balance >= MAX_DEPOSIT_AMOUNT) {
+			throw new ExceedsCombinedLimitException("Deposit exceeds the " + MAX_DEPOSIT_AMOUNT + " total.");
+		}
+		else {	
+			log.info("Account balance is : " + ah.combinedBalance());
+			log.info("Added " + balance);
+			iraAccount.setAccountHolder(ah);
+		return iraRepository.save(iraAccount);
+		}
+	}
+	
 	public SavingsAccount postSavingsAccount(int id, SavingsAccount savingsAccount) throws NoSuchResourceFoundException, ExceedsCombinedLimitException {
 		AccountHolder ah = findById(id);
 		Double balance = savingsAccount.getBalance();	
@@ -125,6 +148,16 @@ public class AccountHolderService {
 		AccountHolder ah = findById(id);
 		return ah.getCheckingAccounts();
 	}
+	
+	public List<DBAChecking> getDBACheckingAccount(int id) throws NoSuchResourceFoundException {
+		AccountHolder ah = findById(id);
+		return ah.getDBACheckingAccounts();
+	}
+	
+	public List<IRAAccount> getIRAAccount(int id) throws NoSuchResourceFoundException {
+		AccountHolder ah = findById(id);
+		return ah.getIRAAccounts();
+	}
 
 	public List<SavingsAccount> getSavingsAccount(int id) throws NoSuchResourceFoundException {
 		AccountHolder ah = findById(id);
@@ -144,6 +177,36 @@ public class AccountHolderService {
 	public String deleteAccountHolder(int id) {
 		String msg = "Account " + id+ " Deleted";
 		repository.deleteById(id);
+		return msg;
+	}
+	
+	public String deleteCheckingAccount(int id) {
+		String msg = "Checking Account " + id+ " Deleted";
+		checkingRepository.deleteById(id);
+		return msg;
+	}
+	
+	public String deleteDBACheckingAccount(int id) {
+		String msg = "DBA Checking Account " + id+ " Deleted";
+		dbaCheckingRepository.deleteById(id);
+		return msg;
+	}
+	
+	public String deleteSavingsAccount(int id) {
+		String msg = "Savings Account " + id+ " Deleted";
+		savingsRepository.deleteById(id);
+		return msg;
+	}
+	
+	public String deleteIRAAccount(int id) {
+		String msg = "IRA Account " + id+ " Deleted";
+		iraRepository.deleteById(id);
+		return msg;
+	}
+	
+	public String deleteCDAccount(int id) {
+		String msg = "CD Account " + id+ " Deleted";
+		cdAccountRepository.deleteById(id);
 		return msg;
 	}
 	

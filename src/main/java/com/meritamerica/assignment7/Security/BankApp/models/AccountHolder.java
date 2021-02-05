@@ -56,6 +56,14 @@ public class AccountHolder {
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<CheckingAccount> checkingAccounts;
 	
+	@OneToOne(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
+	private List<DBAChecking> dbaCheckingAccounts;
+	
+	@OneToOne(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
+	private List<IRAAccount> iraAccounts;
+	
 	@OneToOne(targetEntity = SavingsAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<SavingsAccount> savingsAccounts;
@@ -149,6 +157,22 @@ public class AccountHolder {
 		this.checkingAccounts = checkingAccounts;
 	}
 	
+	public List<DBAChecking> getDBACheckingAccounts() {
+		return dbaCheckingAccounts;
+	}
+	
+	public void setDBACheckingAccounts(List<DBAChecking> dbaCheckingAccounts) {
+		this.dbaCheckingAccounts = dbaCheckingAccounts;
+	}
+	
+	public List<IRAAccount> getIRAAccounts() {
+		return iraAccounts;
+	}
+	
+	public void setIRAAccounts(List<IRAAccount> iraAccounts) {
+		this.iraAccounts = iraAccounts;
+	}
+	
 	public List<SavingsAccount> getSavingsAccounts() {
 		return savingsAccounts;
 	}
@@ -169,7 +193,9 @@ public class AccountHolder {
 	public double combinedBalance() {
 		totalBalance = checkingAccountsTotal() 
 						+savingsAccountTotal() 
-						+ cdAccountsTotal();
+						+ cdAccountsTotal()
+						+ dbaCheckingAccountsTotal()
+						+ iraAccountsTotal();
 		return totalBalance;
 	}
 	
@@ -192,6 +218,22 @@ public class AccountHolder {
 	private double checkingAccountsTotal() {
 		double balance = 0;
 		for(CheckingAccount i: checkingAccounts) {
+			balance += i.getBalance() ;
+		}
+		return balance;
+	}
+	
+	private double dbaCheckingAccountsTotal() {
+		double balance = 0;
+		for(DBAChecking i: dbaCheckingAccounts) {
+			balance += i.getBalance() ;
+		}
+		return balance;
+	}
+	
+	private double iraAccountsTotal() {
+		double balance = 0;
+		for(IRAAccount i: iraAccounts) {
 			balance += i.getBalance() ;
 		}
 		return balance;
