@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @DiscriminatorValue("CHECKING")
-public abstract class CheckingAccount extends BankAccount {
+public class CheckingAccount extends BankAccount {
 
 	private static final double INTEREST_RATE = .0001;
 
