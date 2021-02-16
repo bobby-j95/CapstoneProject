@@ -2,6 +2,7 @@ package com.meritamerica.assignment7.Security.BankApp.models;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -52,24 +53,24 @@ public class AccountHolder {
 	private Users user;
 	
 
-	@OneToOne(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<CheckingAccount> checkingAccounts;
 	
-	@OneToOne(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<DBAChecking> dbaCheckingAccounts;
 	
-	@OneToOne(targetEntity = CheckingAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<IRAAccount> iraAccounts;
 	
-	@OneToOne(targetEntity = SavingsAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	//@JoinColumn(name = "account_holder_id", referencedColumnName = "account_id")
 	private List<SavingsAccount> savingsAccounts;
 
 	
-	@OneToMany(targetEntity = CDAccount.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountHolder")
 	private List<CDAccount> cdAccounts;
 	
 	@JsonIgnore
@@ -81,6 +82,11 @@ public class AccountHolder {
 		this.middleName = "";
 		this.lastName = "";
 		this.ssn = "";
+		checkingAccounts = new ArrayList<CheckingAccount>();
+		dbaCheckingAccounts = new ArrayList<DBAChecking>();
+		iraAccounts = new ArrayList<IRAAccount>();
+		savingsAccounts = new ArrayList<SavingsAccount>();
+		cdAccounts = new ArrayList<CDAccount>();
 	}
 
 	
