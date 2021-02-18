@@ -46,12 +46,46 @@ public class CDAccount extends BankAccount {
 		this.term = term;
 	}
 
+	public double futureValue() {
+		return (super.getBalance() * Math.pow(1.0 + cdOffering.getInterestRate(), cdOffering.getTerm()));
+	}
+
+	/*
+	// compares the best value for CDAccount by its offerings and outputs that
+	// offering
+	public CDOffering getBestCDOffering(double depositAmount) {
+		CDOffering temp = cdOffering[0];
+		for (int x = 1; x < cdOffering.length; x++) {
+			if (futureValue(depositAmount, cdOffering[x - 1].getInterestRate(),
+					cdOffering[x - 1].getTerm()) < futureValue(depositAmount, cdOffering[x].getInterestRate(),
+							cdOffering[x].getTerm())) {
+				temp = cdOffering[x];
+			}
+		}
+		return temp;
+	}
+	
+	// compares the second best value for CDAccount by its offerings and outputs
+	// that offering
+	static CDOffering getSecondBestCDOffering(double depositAmount) {
+		CDOffering temp = cdOffering[0];
+		CDOffering temp2 = cdOffering[0];
+		for (int x = 1; x < cdOffering.length; x++) {
+			if (futureValue(depositAmount, cdOffering[x - 1].getInterestRate(),
+				cdOffering[x - 1].getTerm()) < futureValue(depositAmount, cdOffering[x].getInterestRate(),
+				cdOffering[x].getTerm())) {
+				temp2 = temp;
+				temp = cdOffering[x];
+			}
+		}
+		return temp2;
+	}
+	 */
+	
 	@Override
 	public boolean closeAccount(BankAccount acc) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
 
 }
